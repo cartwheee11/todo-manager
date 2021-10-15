@@ -79,8 +79,11 @@
 </template>
 
 <script>
+
 import DialogElement from '@/components/DialogElement'
 import * as api from '@/api.js'
+import dialogPolyfill from 'dialog-polyfill';
+
 export default {
   name: 'MainTaskManager',
   components: {
@@ -112,9 +115,14 @@ export default {
         text: 'default Dialog Text',
         onConfirm: null,
         onCancel: null
-      }
+      },
       
     }
+  },
+
+  mounted() {
+    this.dialog = document.getElementById('dialog');
+    dialogPolyfill.registerDialog(this.dialog);
   },
 
   watch: {
@@ -179,7 +187,11 @@ export default {
       this.dialog.onConfirm = () => {
         this.deleteNote(key);
       }
-      document.getElementById('dialog').showModal();
+      // document.getElementById('dialog').showModal();
+
+      // let dialog = document.getElementById('dialog');
+      this.dialog.showModal();
+
     }, 
 
     onTodoChange(noteKey, todoKey, todo) {
