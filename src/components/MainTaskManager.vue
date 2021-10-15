@@ -179,6 +179,9 @@ export default {
     deleteNote(key) {
       this.notes.list.splice(key, 1)
       this.$emit('delete-note', key);
+      if(this.notes.list.length == 0) {
+        this.$emit('no-notes-left')
+      }
     },
 
     onNoteDeleteButton(key) {
@@ -187,9 +190,6 @@ export default {
       this.dialog.onConfirm = () => {
         this.deleteNote(key);
       }
-      // document.getElementById('dialog').showModal();
-
-      // let dialog = document.getElementById('dialog');
       this.dialog.ref.showModal();
 
     }, 

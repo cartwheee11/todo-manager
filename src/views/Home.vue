@@ -1,5 +1,6 @@
 <template>
   <main-task-manager 
+    @no-notes-left="onNoNotesLeft"
     @createNote="onNoteCreate"
     @delete-note="onNoteDelete" 
     :notesFrom="parseInt((currentPage - 1) * notesInPage)" 
@@ -28,10 +29,17 @@ export default {
   },
 
   methods: {
+    onNoNotesLeft() {
+      console.log('hello')
+      if(this.currentPage != 1) {
+        this.$router.push('/' + (this.currentPage - 1))
+      }
+    },
+
     onNoteDelete(key) {
-      // console.log(this.currentPage)
       console.log(key + (this.currentPage - 1) * this.notesInPage)
       api.deleteNote(key + (this.currentPage - 1) * this.notesInPage);
+      this.pagesNumber = this.updatePagesNumber();
     },
 
     onNoteCreate() {
@@ -51,7 +59,10 @@ export default {
     this.$watch(
       () => this.$route.params,
       () => {
-        this.currentPage = this.$route.params.page || 1;
+        let routerPageParam = this.$route.params.page || 1;
+        if(routerPageParam <= this.pagesNumber && routerPageParam >= 1) {
+          this.currentPage = this.$route.params.page || 1;
+        }
       }
     )
 
