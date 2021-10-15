@@ -29,6 +29,7 @@ export default {
 
   methods: {
     onNoteDelete(key) {
+      // console.log(this.currentPage)
       console.log(key + (this.currentPage - 1) * this.notesInPage)
       api.deleteNote(key + (this.currentPage - 1) * this.notesInPage);
     },

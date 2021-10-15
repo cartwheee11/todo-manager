@@ -121,8 +121,8 @@ export default {
   },
 
   mounted() {
-    this.dialog = document.getElementById('dialog');
-    dialogPolyfill.registerDialog(this.dialog);
+    this.dialog.ref = document.getElementById('dialog');
+    dialogPolyfill.registerDialog(this.dialog.ref);
   },
 
   watch: {
@@ -178,11 +178,11 @@ export default {
 
     deleteNote(key) {
       this.notes.list.splice(key, 1)
-      // api.deleteNote(this.currentPage - 1 + key);
       this.$emit('delete-note', key);
     },
 
     onNoteDeleteButton(key) {
+      console.log('сработало')
       this.dialog.text = 'Вы действительно хотите удалить список?'
       this.dialog.onConfirm = () => {
         this.deleteNote(key);
@@ -190,7 +190,7 @@ export default {
       // document.getElementById('dialog').showModal();
 
       // let dialog = document.getElementById('dialog');
-      this.dialog.showModal();
+      this.dialog.ref.showModal();
 
     }, 
 
