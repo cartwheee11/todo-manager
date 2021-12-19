@@ -182,6 +182,9 @@ export default {
       if(this.notes.list.length == 0) {
         this.$emit('no-notes-left')
       }
+
+      this.notes = this.initNotes();
+      // this.initNotes();
     },
 
     onNoteDeleteButton(key) {
@@ -199,7 +202,6 @@ export default {
     },
 
     newTodoOnEnter(note, key) {
-
       if(!note.newTodo) return
       note.todos.push({
         text: note.newTodo,
@@ -250,6 +252,11 @@ export default {
         // note.addTodoInputRef.focus();
         this.notes.list[0].addTodoInputRef.focus();
       })
+
+      if(this.notes.list.length > this.notesNumber) {
+        console.log('привет сосед')
+        this.notes.list.splice(this.notesNumber, 1)
+      }
     },
 
     onNewTodoInput(elem) {

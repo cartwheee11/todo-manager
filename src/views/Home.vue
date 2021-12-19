@@ -1,4 +1,5 @@
 <template>
+  <!-- <button @click="onDeleeteAllNotesButton">asdas</button> -->
   <main-task-manager 
     @no-notes-left="onNoNotesLeft"
     @createNote="onNoteCreate"
@@ -6,6 +7,8 @@
     :notesFrom="parseInt((currentPage - 1) * notesInPage)" 
     :notesNumber="notesInPage"
   />
+
+  
   <pagination-element @goToPage="onPagGoToPage" :pagesNumber="pagesNumber" :pagesAround="3" :currentPage="parseInt(currentPage)" />
 </template>
 
@@ -29,6 +32,10 @@ export default {
   },
 
   methods: {
+    onDeleeteAllNotesButton() {
+      api.removeAllNotes();
+    },
+
     onNoNotesLeft() {
       console.log('hello')
       if(this.currentPage != 1) {
